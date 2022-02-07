@@ -10,8 +10,13 @@ class MiniMusicVisualizer extends StatelessWidget {
     this.height,
   }) : super(key: key);
 
+  /// Color of bars
   final Color? color;
+
+  /// width of visualizer widget
   final double? width;
+
+  /// height of visualizer widget
   final double? height;
 
   @override
