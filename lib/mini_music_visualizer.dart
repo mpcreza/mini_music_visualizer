@@ -77,8 +77,7 @@ class _VisualComponentState extends State<VisualComponent>
         duration: Duration(milliseconds: widget.duration), vsync: this);
     final curvedAnimation =
         CurvedAnimation(parent: animationController, curve: widget.curve);
-    animation = Tween<double>(begin: 2, end: height)
-        .animate(curvedAnimation)
+    animation = Tween<double>(begin: 2, end: height).animate(curvedAnimation)
       ..addListener(() {
         update();
       });
