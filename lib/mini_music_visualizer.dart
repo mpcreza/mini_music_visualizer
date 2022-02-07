@@ -6,9 +6,13 @@ class MiniMusicVisualizer extends StatelessWidget {
   const MiniMusicVisualizer({
     Key? key,
     this.color,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   final Color? color;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +22,15 @@ class MiniMusicVisualizer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List<Widget>.generate(
         3,
-        (index) => VisualComponent(
-          curve: Curves.bounceOut,
-          duration: duration[index % 5],
-          color: color ?? Theme.of(context).colorScheme.secondary,
+        (index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 1),
+          child: VisualComponent(
+            curve: Curves.bounceOut,
+            duration: duration[index % 5],
+            color: color ?? Theme.of(context).colorScheme.secondary,
+            width: width,
+            height: height,
+          ),
         ),
       ),
     );
@@ -34,11 +43,15 @@ class VisualComponent extends StatefulWidget {
     required this.duration,
     required this.color,
     required this.curve,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   final int duration;
   final Color color;
   final Curve curve;
+  final double? width;
+  final double? height;
 
   @override
   _VisualComponentState createState() => _VisualComponentState();
@@ -48,10 +61,14 @@ class _VisualComponentState extends State<VisualComponent>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController animationController;
+  late double width;
+  late double height;
 
   @override
   void initState() {
     super.initState();
+    width = widget.width ?? 4;
+    height = widget.height ?? 15;
     animate();
   }
 
@@ -60,7 +77,8 @@ class _VisualComponentState extends State<VisualComponent>
         duration: Duration(milliseconds: widget.duration), vsync: this);
     final curvedAnimation =
         CurvedAnimation(parent: animationController, curve: widget.curve);
-    animation = Tween<double>(begin: 2, end: 15).animate(curvedAnimation)
+    animation = Tween<double>(begin: 2, end: height)
+        .animate(curvedAnimation)
       ..addListener(() {
         update();
       });
@@ -74,12 +92,11 @@ class _VisualComponentState extends State<VisualComponent>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 5,
-      height: 15,
+      width: width,
+      height: height,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          width: 3,
           height: animation.value,
           decoration: BoxDecoration(
             color: widget.color,

@@ -51,6 +51,8 @@ class HomePage extends StatelessWidget {
                     if (index == 1)
                       const MiniMusicVisualizer(
                         color: Colors.red,
+                        width: 4,
+                        height: 15,
                       ),
                     IconButton(
                       onPressed: () {},
