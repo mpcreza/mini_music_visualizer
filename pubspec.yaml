@@ -1,6 +1,6 @@
 name: mini_music_visualizer
 description: A flutter package for show simple music visualizer animation
-version: 1.0.0+1
+version: 1.0.1
 homepage: https://github.com/mpcreza/mini_music_visualizer
 
 environment:
