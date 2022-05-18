@@ -69,6 +69,9 @@ class _VisualComponentState extends State<VisualComponent>
   late double width;
   late double height;
 
+  //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
+  T? _ambiguate<T>(T? value) => value;
+
   @override
   void initState() {
     super.initState();
@@ -90,7 +93,7 @@ class _VisualComponentState extends State<VisualComponent>
   }
 
   void update() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    _ambiguate(WidgetsBinding.instance)!.addPostFrameCallback((timeStamp) {
       if (mounted) setState(() {});
     });
   }
