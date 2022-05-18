@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Flutter 3 support
+
 ## 1.0.1
 
 - minor fix
