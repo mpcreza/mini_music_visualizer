@@ -11,6 +11,7 @@ class MiniMusicVisualizer extends StatelessWidget {
     this.height,
     this.radius = 0,
     this.animate = false,
+    this.shadows,
   }) : super(key: key);
 
   /// Color of bars
@@ -24,6 +25,7 @@ class MiniMusicVisualizer extends StatelessWidget {
 
   final bool animate;
   final double radius;
+  final List<BoxShadow>? shadows;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class MiniMusicVisualizer extends StatelessWidget {
             width: width,
             height: height,
             radius: radius,
+            shadows: shadows,
             animate: animate,
           ),
         ),
@@ -59,6 +62,7 @@ class VisualComponent extends StatefulWidget {
     this.width,
     this.height,
     this.radius = 0,
+    this.shadows,
     this.animate = false,
   }) : super(key: key);
 
@@ -68,6 +72,7 @@ class VisualComponent extends StatefulWidget {
   final double? width;
   final double? height;
   final double radius;
+  final List<BoxShadow>? shadows;
   final bool animate;
 
   @override
@@ -81,6 +86,7 @@ class _VisualComponentState extends State<VisualComponent>
   late double width;
   late double radius;
   late double height;
+  late List<BoxShadow>? shadows;
 
   //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
   T? _ambiguate<T>(T? value) => value;
@@ -91,6 +97,7 @@ class _VisualComponentState extends State<VisualComponent>
     width = widget.width ?? 4;
     height = widget.height ?? 15;
     radius = min(widget.radius, height / 2);
+    shadows = widget.shadows;
     addAnimate();
     if (widget.animate) {
       start();
@@ -148,6 +155,7 @@ class _VisualComponentState extends State<VisualComponent>
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(min(radius, animation.value / 2)),
             color: widget.color,
+            boxShadow: shadows,
           ),
         ),
       ),
