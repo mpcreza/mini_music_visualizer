@@ -1,6 +1,7 @@
 library mini_music_visualizer;
 
 import "package:flutter/material.dart";
+import 'dart:math';
 
 class MiniMusicVisualizer extends StatelessWidget {
   const MiniMusicVisualizer({
@@ -8,6 +9,7 @@ class MiniMusicVisualizer extends StatelessWidget {
     this.color,
     this.width,
     this.height,
+    this.radius = 0,
     this.animate = false,
   }) : super(key: key);
 
@@ -21,6 +23,7 @@ class MiniMusicVisualizer extends StatelessWidget {
   final double? height;
 
   final bool animate;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,7 @@ class MiniMusicVisualizer extends StatelessWidget {
             color: color ?? Theme.of(context).colorScheme.secondary,
             width: width,
             height: height,
+            radius: radius,
             animate: animate,
           ),
         ),
@@ -54,6 +58,7 @@ class VisualComponent extends StatefulWidget {
     required this.curve,
     this.width,
     this.height,
+    this.radius = 0,
     this.animate = false,
   }) : super(key: key);
 
@@ -62,6 +67,7 @@ class VisualComponent extends StatefulWidget {
   final Curve curve;
   final double? width;
   final double? height;
+  final double radius;
   final bool animate;
 
   @override
@@ -73,6 +79,7 @@ class _VisualComponentState extends State<VisualComponent>
   late Animation<double> animation;
   late AnimationController animationController;
   late double width;
+  late double radius;
   late double height;
 
   //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
@@ -83,6 +90,7 @@ class _VisualComponentState extends State<VisualComponent>
     super.initState();
     width = widget.width ?? 4;
     height = widget.height ?? 15;
+    radius = min(widget.radius, height / 2);
     addAnimate();
     if (widget.animate) {
       start();
@@ -138,6 +146,7 @@ class _VisualComponentState extends State<VisualComponent>
         child: Container(
           height: animation.value,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(min(radius, animation.value / 2)),
             color: widget.color,
           ),
         ),

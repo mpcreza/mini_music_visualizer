@@ -62,6 +62,7 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.red,
                             width: 4,
                             height: 15,
+                            radius: 2,
                             animate: value,
                           );
                         },
