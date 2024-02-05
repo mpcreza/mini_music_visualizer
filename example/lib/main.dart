@@ -21,8 +21,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  final ValueNotifier<bool> playing = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +57,14 @@ class HomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (index == 1)
-                      const MiniMusicVisualizer(
-                        color: Colors.red,
-                        width: 4,
-                        height: 15,
+                      ValueListenableBuilder<bool>(valueListenable: playing, builder: (BuildContext context, value, Widget? child) {
+                          return MiniMusicVisualizer(
+                            color: Colors.red,
+                            width: 4,
+                            height: 15,
+                            animate: value,
+                          );
+                        },
                       ),
                     IconButton(
                       onPressed: () {},
@@ -64,6 +76,13 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
+      ),
+      floatingActionButton: ValueListenableBuilder(
+        valueListenable: playing, builder: (BuildContext context, bool value, Widget? child) { 
+          return  IconButton(icon: playing.value ? const Icon(Icons.pause) : const Icon(Icons.play_arrow), onPressed: () {
+            playing.value = !playing.value;
+          });
+         }, 
       ),
     );
   }

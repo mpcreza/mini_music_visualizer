@@ -8,6 +8,7 @@ class MiniMusicVisualizer extends StatelessWidget {
     this.color,
     this.width,
     this.height,
+    this.animate = false,
   }) : super(key: key);
 
   /// Color of bars
@@ -18,6 +19,8 @@ class MiniMusicVisualizer extends StatelessWidget {
 
   /// height of visualizer widget
   final double? height;
+
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class MiniMusicVisualizer extends StatelessWidget {
             color: color ?? Theme.of(context).colorScheme.secondary,
             width: width,
             height: height,
+            animate: animate,
           ),
         ),
       ),
@@ -50,6 +54,7 @@ class VisualComponent extends StatefulWidget {
     required this.curve,
     this.width,
     this.height,
+    this.animate = false,
   }) : super(key: key);
 
   final int duration;
@@ -57,6 +62,7 @@ class VisualComponent extends StatefulWidget {
   final Curve curve;
   final double? width;
   final double? height;
+  final bool animate;
 
   @override
   _VisualComponentState createState() => _VisualComponentState();
@@ -77,10 +83,27 @@ class _VisualComponentState extends State<VisualComponent>
     super.initState();
     width = widget.width ?? 4;
     height = widget.height ?? 15;
-    animate();
+    addAnimate();
+    if (widget.animate) {
+      start();
+    } else {
+      pause();
+    }
   }
 
-  void animate() {
+  @override
+  void didUpdateWidget(VisualComponent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.animate != widget.animate) {
+      if (widget.animate) {
+        start();
+      } else {
+        pause();
+      }
+    }
+  }
+
+  void addAnimate() {
     animationController = AnimationController(
         duration: Duration(milliseconds: widget.duration), vsync: this);
     final curvedAnimation =
@@ -89,7 +112,14 @@ class _VisualComponentState extends State<VisualComponent>
       ..addListener(() {
         update();
       });
+  }
+
+  void start() {
     animationController.repeat(reverse: true);
+  }
+
+  void pause() {
+    animationController.stop();
   }
 
   void update() {
