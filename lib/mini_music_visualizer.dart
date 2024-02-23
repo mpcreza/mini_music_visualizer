@@ -153,7 +153,8 @@ class _VisualComponentState extends State<VisualComponent>
         child: Container(
           height: animation.value,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(min(radius, animation.value / 2)),
+            borderRadius:
+                BorderRadius.circular(min(radius, animation.value / 2)),
             color: widget.color,
             boxShadow: shadows,
           ),

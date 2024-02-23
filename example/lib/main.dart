@@ -29,8 +29,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  final ValueNotifier<bool> playing = ValueNotifier(false);
+  final ValueNotifier<bool> playing = ValueNotifier(true);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,9 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (index == 1)
-                      ValueListenableBuilder<bool>(valueListenable: playing, builder: (BuildContext context, value, Widget? child) {
+                      ValueListenableBuilder<bool>(
+                        valueListenable: playing,
+                        builder: (BuildContext context, value, Widget? child) {
                           return MiniMusicVisualizer(
                             color: Colors.red,
                             width: 4,
@@ -79,11 +80,16 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: ValueListenableBuilder(
-        valueListenable: playing, builder: (BuildContext context, bool value, Widget? child) { 
-          return  IconButton(icon: playing.value ? const Icon(Icons.pause) : const Icon(Icons.play_arrow), onPressed: () {
-            playing.value = !playing.value;
-          });
-         }, 
+        valueListenable: playing,
+        builder: (BuildContext context, bool value, Widget? child) {
+          return FloatingActionButton.extended(
+            onPressed: () {
+              playing.value = !playing.value;
+            },
+            label: const Text('Play / Pause'),
+            icon: Icon(playing.value ? Icons.pause : Icons.play_arrow),
+          );
+        },
       ),
     );
   }
