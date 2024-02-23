@@ -1,3 +1,8 @@
+## 1.1.0
+
+- Add Play/Pause support(Thanks to [MrLittleWhite](https://github.com/MrLittleWhite)).
+- Radius
+
 ## 1.0.2
 
 - Flutter 3 support
