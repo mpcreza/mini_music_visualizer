@@ -15,3 +15,5 @@ MiniMusicVisualizer(
   height: 15,
 )
 ```
+
+### See the demo project for the complete example.
