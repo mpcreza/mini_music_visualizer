@@ -1,6 +1,7 @@
 library mini_music_visualizer;
 
 import "package:flutter/material.dart";
+import 'dart:math';
 
 class MiniMusicVisualizer extends StatelessWidget {
   const MiniMusicVisualizer({
@@ -8,6 +9,9 @@ class MiniMusicVisualizer extends StatelessWidget {
     this.color,
     this.width,
     this.height,
+    this.radius = 0,
+    this.animate = false,
+    this.shadows,
   }) : super(key: key);
 
   /// Color of bars
@@ -18,6 +22,10 @@ class MiniMusicVisualizer extends StatelessWidget {
 
   /// height of visualizer widget
   final double? height;
+
+  final bool animate;
+  final double radius;
+  final List<BoxShadow>? shadows;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +43,9 @@ class MiniMusicVisualizer extends StatelessWidget {
             color: color ?? Theme.of(context).colorScheme.secondary,
             width: width,
             height: height,
+            radius: radius,
+            shadows: shadows,
+            animate: animate,
           ),
         ),
       ),
@@ -50,6 +61,9 @@ class VisualComponent extends StatefulWidget {
     required this.curve,
     this.width,
     this.height,
+    this.radius = 0,
+    this.shadows,
+    this.animate = false,
   }) : super(key: key);
 
   final int duration;
@@ -57,6 +71,9 @@ class VisualComponent extends StatefulWidget {
   final Curve curve;
   final double? width;
   final double? height;
+  final double radius;
+  final List<BoxShadow>? shadows;
+  final bool animate;
 
   @override
   _VisualComponentState createState() => _VisualComponentState();
@@ -67,7 +84,9 @@ class _VisualComponentState extends State<VisualComponent>
   late Animation<double> animation;
   late AnimationController animationController;
   late double width;
+  late double radius;
   late double height;
+  late List<BoxShadow>? shadows;
 
   //https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
   T? _ambiguate<T>(T? value) => value;
@@ -77,10 +96,29 @@ class _VisualComponentState extends State<VisualComponent>
     super.initState();
     width = widget.width ?? 4;
     height = widget.height ?? 15;
-    animate();
+    radius = min(widget.radius, height / 2);
+    shadows = widget.shadows;
+    addAnimate();
+    if (widget.animate) {
+      start();
+    } else {
+      pause();
+    }
   }
 
-  void animate() {
+  @override
+  void didUpdateWidget(VisualComponent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.animate != widget.animate) {
+      if (widget.animate) {
+        start();
+      } else {
+        pause();
+      }
+    }
+  }
+
+  void addAnimate() {
     animationController = AnimationController(
         duration: Duration(milliseconds: widget.duration), vsync: this);
     final curvedAnimation =
@@ -89,7 +127,14 @@ class _VisualComponentState extends State<VisualComponent>
       ..addListener(() {
         update();
       });
+  }
+
+  void start() {
     animationController.repeat(reverse: true);
+  }
+
+  void pause() {
+    animationController.stop();
   }
 
   void update() {
@@ -108,7 +153,9 @@ class _VisualComponentState extends State<VisualComponent>
         child: Container(
           height: animation.value,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(min(radius, animation.value / 2)),
             color: widget.color,
+            boxShadow: shadows,
           ),
         ),
       ),
