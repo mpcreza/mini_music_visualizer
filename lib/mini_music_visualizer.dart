@@ -135,6 +135,7 @@ class _VisualComponentState extends State<VisualComponent>
 
   void pause() {
     animationController.stop();
+    animationController.reverse();
   }
 
   void update() {
