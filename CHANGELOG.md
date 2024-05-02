@@ -1,3 +1,7 @@
+## 1.1.1+2
+
+- Update README.
+
 ## 1.1.1
 
 - Reverse the animation when paused instead of freezing it(Thanks to [Pato05](https://github.com/Pato05)).
