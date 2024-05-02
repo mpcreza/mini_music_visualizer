@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Reverse the animation when paused instead of freezing it(Thanks to [Pato05](https://github.com/Pato05)).
+
 ## 1.1.0
 
 - Added Play/Pause support(Thanks to [MrLittleWhite](https://github.com/MrLittleWhite)).
