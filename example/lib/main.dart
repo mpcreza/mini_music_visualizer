@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Demo Project',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                   clipBehavior: Clip.antiAlias,
                   child: Image(
                     image: AssetImage(item.image),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 trailing: Row(
@@ -97,16 +99,6 @@ class _HomePageState extends State<HomePage> {
 
 const musicLibrary = [
   SongMetadata(
-    title: 'champagne problems',
-    artist: 'Taylor Swift',
-    image: 'assets/images/Taylor_Swift_Evermore.png',
-  ),
-  SongMetadata(
-    title: 'my tears ricochet',
-    artist: 'Taylor Swift',
-    image: 'assets/images/Taylor_Swift_Folklore.png',
-  ),
-  SongMetadata(
     title: 'Invader',
     artist: 'Dance With the Dead',
     image: 'assets/images/Dance_with_the_dead_near_dark.jpg',
@@ -117,8 +109,18 @@ const musicLibrary = [
     image: 'assets/images/Queen_Jazz.png',
   ),
   SongMetadata(
-    title: 'Shake It Off',
-    artist: 'Taylor Swift',
-    image: 'assets/images/Taylor_Swift_1989.png',
+    title: 'I\'m Good (Blue)',
+    artist: 'David Guetta, Bebe Rexha',
+    image: 'assets/images/I\'m_Good_Blue.png',
+  ),
+  SongMetadata(
+    title: 'Excaping the Void',
+    artist: 'Timecop1983',
+    image: 'assets/images/Excaping_the_Void.jpg',
+  ),
+  SongMetadata(
+    title: 'Master of Puppets (Remastered)',
+    artist: 'Metallica',
+    image: 'assets/images/Master_of_Puppets_Remastered.jpg',
   ),
 ];
