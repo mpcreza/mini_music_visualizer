@@ -4,7 +4,7 @@ A flutter package for show simple music visualizer animation
 
 forked from [music_visualizer_package](https://github.com/Rajkumar07793/music_visualizer_package)
 
-![](screenshots/screenshot.gif)
+<img src="screenshots/screenshot.gif" height="800">
 
 ### Example
 
